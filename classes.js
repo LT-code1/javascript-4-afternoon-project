@@ -30,6 +30,20 @@
 */
 
 //Code Here
+class Employee{
+  constructor(firstName,lastName,email,age){
+    this.first_name = firstName;
+    this.last_name = lastName;
+    this.email = email;
+    this.age = age;
+  }
+  makeWidget(){
+    return this.first_name + " " + this.last_name + " Widget";
+  }
+}
+
+const emp1 = new Employee("bob","doe","stuff",25);
+emp1.makeWidget();
 
 
 ////////// PROBLEM 2 //////////
@@ -48,13 +62,28 @@
 */
 
 //Code Here
+class Manager extends Employee{
+  constructor(firstName,lastName,email,age,reports=[]){
+    super(firstName,lastName,email,age);       //invokes constructor of parent class//super has to go first
+    this.reports = reports;
+  }
 
+  hire(emp){
+    this.reports.push(emp);
+  }
+
+  fire(i){
+    this.reports.splice(i,1);
+  }
+
+}
 
 ////////// PROBLEM 3 //////////
 
 /*
   Managers for Widget Co. get promoted when they get more employees, and get a bonus when they fire employees.
-  create a class ProgressiveManager that extends Manager.  A Progressive Manager has all of the same properties as a manager with the following additional properties:
+  create a class ProgressiveManager that extends Manager.  A Progressive Manager has all of the same properties as a manager with the following
+  //additional properties:
     - title - default 'Not a manager'
     - bonus - default 0
 
@@ -72,8 +101,38 @@
 */
 
 //Code Here
+class ProgressiveManager extends Manager{
+  constructor(firstName,lastName,email,age,reports=[],title='Not a manager',bonus=0){
+        super(firstName,lastName,email,age,reports=[]);
+        this.title = title;
+        this.bonus = bonus;
+  }
+ 
+  fire(i){
+    super.fire(i);
+    this.bonus+=100;
+  
+          if (this.reports.length===0){this.title="Not a manager"}
+          else if(this.reports.length<4 && this.reports.length>0){this.title="Barely Manager"}
+          else if(this.reports.length<11 && this.reports.length>3){this.title="Mostly Manager"}
+          else if(this.reports.length<51 && this.reports.length>10){this.title="Manager"}
+          else if(this.reports.length<101 && this.reports.length>50){this.title="Manager Plus"}
+          else {this.title="Bestest Manager"}
+  }
 
+  hire(emp){
+    super.hire(emp);
+   
+          if (this.reports.length===0){this.title="Not a manager"}
+          else if(this.reports.length<4 && this.reports.length>0){this.title="Barely Manager"}
+          else if(this.reports.length<11 && this.reports.length>3){this.title="Mostly Manager"}
+          else if(this.reports.length<51 && this.reports.length>10){this.title="Manager"}
+          else if(this.reports.length<101 && this.reports.length>50){this.title="Manager Plus"}
+          else {this.title="Bestest Manager"}
+        
+  }
 
+}
 
 ////////// PROBLEM 4 - Black Diamond //////////
 
